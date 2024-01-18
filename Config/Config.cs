@@ -12,10 +12,12 @@ namespace AtlasAbyss {
     [Serializable]
     public class Config : SyncedInstance<Config>
     { 
+        public bool customPriceEnabled;
         public int moonPrice;
         public Config(ConfigFile cfg)
         {
             InitInstance(this);
+            customPriceEnabled = cfg.Bind("General", "CustomPriceEnabled", false, "Enable this if you wish to configure the moons route price below.").Value;
             moonPrice = cfg.Bind("General", "MoonPrice", 300, "The route price of the Atlas Abyss moon.").Value;
         }
         

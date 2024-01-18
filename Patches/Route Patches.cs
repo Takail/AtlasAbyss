@@ -12,6 +12,9 @@ namespace AtlasAbyss.Patches {
         [HarmonyPatch("LoadNewNode")]
         [HarmonyPrefix]
         private static void LoadNewNodePatchBefore(ref TerminalNode node) {
+            if (!Config.Instance.customPriceEnabled) {
+                return;
+            }
             var terminal = Object.FindObjectOfType<Terminal>();
             Plugin.Logger.LogDebug(node.name);
             foreach (var noun in terminal.terminalNodes.allKeywords.First(terminalKeyword => terminalKeyword.word == "route").compatibleNouns) {
@@ -28,6 +31,9 @@ namespace AtlasAbyss.Patches {
         [HarmonyPatch("LoadNewNodeIfAffordable")]
         [HarmonyPrefix]
         static void LoadNewNodeIfAffordablePatch(ref TerminalNode node) {
+            if (!Config.Instance.customPriceEnabled) {
+                return;
+            }
             Plugin.Logger.LogDebug(node.name);
             if (node == null || node.name != "atlas abyssRouteConfirm") {
                 return;
